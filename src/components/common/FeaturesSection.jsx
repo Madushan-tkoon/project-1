@@ -31,30 +31,49 @@ const FeaturesSection = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      featuresRef.current.forEach((item, index) => {
-        if (item) {
-          gsap.fromTo(item, 
-            {
-              opacity: 0,
-              y: 60,
-              scale: 0.8
-            },
-            {
+      const mm = gsap.matchMedia();
+
+      // Desktop සඳහා පමණක් animation (768px සහ ඊට වැඩි)
+      mm.add("(min-width: 768px)", () => {
+        featuresRef.current.forEach((item, index) => {
+          if (item) {
+            gsap.fromTo(item, 
+              {
+                opacity: 0,
+                y: 60,
+                scale: 0.8
+              },
+              {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 0.8,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: item,
+                  start: "top 80%", 
+                  end: "bottom 20%",
+                  toggleActions: "play none none none"
+                }
+              }
+            )
+          }
+        })
+      });
+
+      // Mobile සඳහා - animation නොමැතිව (767px සහ ඊට අඩු)
+      mm.add("(max-width: 767px)", () => {
+        featuresRef.current.forEach((item, index) => {
+          if (item) {
+            // Mobile එකේ elements සාමාන්‍ය state එකේම තබා ගන්න
+            gsap.set(item, {
               opacity: 1,
               y: 0,
-              scale: 1,
-              duration: 0.8,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: item,
-                start: "top 80%", 
-                end: "bottom 20%",
-                toggleActions: "play none none none"
-              }
-            }
-          )
-        }
-      })
+              scale: 1
+            });
+          }
+        })
+      });
 
     }, sectionRef)
 

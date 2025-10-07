@@ -15,38 +15,53 @@ const AnimatedText = ({ text, className, delay = 0 }) => {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const textElement = textRef.current;
+      const mm = gsap.matchMedia();
+      
+      // Desktop සඳහා පමණක් text animation
+      mm.add("(min-width: 768px)", () => {
+        const textElement = textRef.current;
 
-      if (textElement) {
-        const words = textElement.innerText.split(' ');
-        textElement.innerHTML = '';
+        if (textElement) {
+          const words = textElement.innerText.split(' ');
+          textElement.innerHTML = '';
 
-        words.forEach((word) => {
-          const span = document.createElement('span');
-          span.textContent = word + ' ';
-          span.style.opacity = '0.2';
-          textElement.appendChild(span);
-        });
+          words.forEach((word) => {
+            const span = document.createElement('span');
+            span.textContent = word + ' ';
+            span.style.opacity = '0.2';
+            textElement.appendChild(span);
+          });
 
-        gsap.fromTo(
-          textElement.querySelectorAll('span'),
-          { opacity: 0.2 },
-          {
-            opacity: 1,
-            duration: 0.4,
-            stagger: 0.1,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: textElement,
-              start: "top 80%",
-              end: "bottom 20%",
-              toggleActions: "play none none none",
-              once: true
-            },
-            delay: delay
-          }
-        );
-      }
+          gsap.fromTo(
+            textElement.querySelectorAll('span'),
+            { opacity: 0.2 },
+            {
+              opacity: 1,
+              duration: 0.4,
+              stagger: 0.1,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: textElement,
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play none none none",
+                once: true
+              },
+              delay: delay
+            }
+          );
+        }
+      });
+
+      // Mobile සඳහා - text animation නැත
+      mm.add("(max-width: 767px)", () => {
+        const textElement = textRef.current;
+        if (textElement) {
+          // Text එක සාමාන්‍ය state එකේම තබා ගන්න
+          textElement.style.opacity = '1';
+        }
+      });
+
     });
 
     return () => ctx.revert();
@@ -67,35 +82,56 @@ const FashionSection = () => {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const scrollTriggerConfig = {
-        trigger: sectionRef.current,
-        start: "top 20%",    
-        end: "bottom 10%",   
-        toggleActions: "play none none none",
-        once: true
-      };
+      const mm = gsap.matchMedia();
 
-      gsap.fromTo(img1Ref.current, 
-        { width: "10px", opacity: 0 },
-        { 
-          width: "200px", 
-          opacity: 1, 
-          duration: 2.5,
-          ease: "power3.out",
-          scrollTrigger: scrollTriggerConfig
-        }
-      );
+      // Desktop සඳහා පමණක් image animations
+      mm.add("(min-width: 768px)", () => {
+        const scrollTriggerConfig = {
+          trigger: sectionRef.current,
+          start: "top 20%",    
+          end: "bottom 10%",   
+          toggleActions: "play none none none",
+          once: true
+        };
 
-      gsap.fromTo(img2Ref.current, 
-        { width: "10px", opacity: 0 },
-        { 
-          width: "200px", 
-          opacity: 1, 
-          duration: 2.5,
-          ease: "power3.out",
-          scrollTrigger: scrollTriggerConfig
+        gsap.fromTo(img1Ref.current, 
+          { width: "10px", opacity: 0 },
+          { 
+            width: "200px", 
+            opacity: 1, 
+            duration: 2.5,
+            ease: "power3.out",
+            scrollTrigger: scrollTriggerConfig
+          }
+        );
+
+        gsap.fromTo(img2Ref.current, 
+          { width: "10px", opacity: 0 },
+          { 
+            width: "200px", 
+            opacity: 1, 
+            duration: 2.5,
+            ease: "power3.out",
+            scrollTrigger: scrollTriggerConfig
+          }
+        );
+      });
+
+      // Mobile සඳහා - images සහ video සාමාන්‍ය state එකේම තබා ගන්න
+      mm.add("(max-width: 767px)", () => {
+        if (img1Ref.current) {
+          img1Ref.current.style.width = "150px";
+          img1Ref.current.style.opacity = "1";
         }
-      );
+        if (img2Ref.current) {
+          img2Ref.current.style.width = "150px";
+          img2Ref.current.style.opacity = "1";
+        }
+        if (videoRef.current) {
+          videoRef.current.style.opacity = "1";
+        }
+      });
+
     });
 
     return () => ctx.revert();

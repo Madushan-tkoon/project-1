@@ -27,47 +27,65 @@ const Product = ({title, products}) => {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(".header-element", 
-        {
-          y: 80,
-          opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: "power3.out",
-          stagger: 0.1,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 85%",
-            end: "top 60%",
-            toggleActions: "play none none none",
-            once: true
+      // Desktop සඳහා පමණක් animation
+      const mm = gsap.matchMedia();
+      
+      mm.add("(min-width: 768px)", () => {
+        // Header elements animation
+        gsap.fromTo(".header-element", 
+          {
+            y: 80,
+            opacity: 0,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.1,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 85%",
+              end: "top 60%",
+              toggleActions: "play none none none",
+              once: true
+            }
           }
-        }
-      );
+        );
 
-      gsap.fromTo(".product-card", 
-        {
-          y: 100, 
-          opacity: 0,
-        },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: "power3.out",
-          stagger: 0.15, 
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 85%", 
-            end: "top 30%",  
-            toggleActions: "play none none none", 
-            once: true 
+        // Product cards animation
+        gsap.fromTo(".product-card", 
+          {
+            y: 100, 
+            opacity: 0,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.15, 
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 85%", 
+              end: "top 30%",  
+              toggleActions: "play none none none", 
+              once: true 
+            }
           }
-        }
-      );
+        );
+      });
+
+      // Mobile සඳහා - animation නොමැතිව
+      mm.add("(max-width: 767px)", () => {
+        // Mobile එකේ කිසිදු animation එකක් නොකරන්න
+        // Elements මුල් state එකේම තබන්න
+        gsap.set([".header-element", ".product-card"], {
+          y: 0,
+          opacity: 1
+        });
+      });
+
     }, sectionRef);
 
     return () => ctx.revert(); 

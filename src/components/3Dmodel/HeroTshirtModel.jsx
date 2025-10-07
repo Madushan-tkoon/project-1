@@ -118,11 +118,7 @@ const Scene = ({selectedTshirt})=>{
       sessionStorage.setItem("hasAnimatedBefore", "true");
 
       tl.to(containerRef.current.position,{
-        y: -1,
-        duration: 0.1,
-        ease: 'none',
-      }).to(containerRef.current.position,{
-        y: -1,
+        y: 0,
         duration: 1,
         ease: 'none',
       }).to(containerRef.current.rotation,{
@@ -130,7 +126,7 @@ const Scene = ({selectedTshirt})=>{
         duration: 1.2,
         ease: 'power2.out',
       }).to(containerRef.current.position,{
-        y: 0,
+        y: 1.12,
         duration: 1.4,
         ease: 'power2.out',
       }).to(containerRef.current.rotation,{
@@ -168,7 +164,7 @@ const Scene = ({selectedTshirt})=>{
 
 
   return (
-    <group position={[0, -0.12, 0]}>
+    <group position={[0, -1.25, 0]}>
        <OrbitControls
         target={[0, 0, 0]}
         enablePan={false} 
