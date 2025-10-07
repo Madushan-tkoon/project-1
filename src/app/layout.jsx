@@ -1,5 +1,5 @@
 import "./globals.css";
-import {Staatliches, Noto_Sans_Mono, Merriweather_Sans, Miniver, Quantico, Jockey_One, Marck_Script} from "next/font/google";
+import {Merriweather_Sans, Jockey_One, Marck_Script} from "next/font/google";
 import { CartProvider } from "../context/CartContext";
 
 const staatliches = Jockey_One({ 
