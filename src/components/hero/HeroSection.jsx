@@ -12,100 +12,95 @@ import Loading from "../common/Loading"
 import { useProgress } from '@react-three/drei'
 import gsap from 'gsap'
 
+
 const HeroSection = () => {
-  
   const [selectedTshirt, setSelectedTshirt] = useState(slideData[1]);
   const { progress } = useProgress();
-  const hasLoadedBefore = sessionStorage.getItem("hasLoadedBefore")
-  const [loading, setLoading] = useState(!hasLoadedBefore)
+
+  // 🔹 Initialize loading as true until we check sessionStorage on client
+  const [loading, setLoading] = useState(true);
 
   const line1Ref = useRef(null);
   const line2Ref = useRef(null);
-  const controlsRef = useRef(null); 
-  const buttonRef = useRef(null); 
+  const controlsRef = useRef(null);
+  const buttonRef = useRef(null);
 
-  const handleSlideChange = (data) => {
-    setSelectedTshirt(data);
-  };
+  const handleSlideChange = (data) => setSelectedTshirt(data);
+
+  // ✅ Check sessionStorage safely inside useEffect
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hasLoadedBefore = sessionStorage.getItem("hasLoadedBefore");
+      setLoading(!hasLoadedBefore);
+    }
+  }, []);
 
   useEffect(() => {
     if (!loading && line1Ref.current && line2Ref.current && controlsRef.current && buttonRef.current) {
-      
       const line1Element = line1Ref.current;
       const line2Element = line2Ref.current;
       const controlsElement = controlsRef.current;
       const buttonElement = buttonRef.current;
-      
+
       gsap.set([line1Element, line2Element, controlsElement, buttonElement], {
         opacity: 0,
-        visibility: 'hidden'
+        visibility: 'hidden',
       });
 
-      gsap.set([line1Element, line2Element], {
-        clipPath: 'inset(0 100% 0 0)'
-      });
-      
-      gsap.set([controlsElement, buttonElement], {
-        y: 50
-      });
+      gsap.set([line1Element, line2Element], { clipPath: 'inset(0 100% 0 0)' });
+      gsap.set([controlsElement, buttonElement], { y: 50 });
 
       const tl = gsap.timeline();
-
       tl.to(line1Element, {
         opacity: 1,
         visibility: 'visible',
         clipPath: 'inset(0 0% 0 0)',
         duration: 3,
-        ease: "power2.out"
+        ease: "power2.out",
       })
-      .to(line2Element, {
-        opacity: 1,
-        visibility: 'visible',
-        clipPath: 'inset(0 0% 0 0)',
-        duration: 2.8,
-        ease: "power2.out"
-      }, "-=3") 
-
-      .to([controlsElement, buttonElement], {
-        opacity: 1,
-        visibility: 'visible',
-        y: 0,
-        duration: 2,
-        ease: "power2.out"
-      }, "-=3")
-      
+        .to(line2Element, {
+          opacity: 1,
+          visibility: 'visible',
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 2.8,
+          ease: "power2.out",
+        }, "-=3")
+        .to([controlsElement, buttonElement], {
+          opacity: 1,
+          visibility: 'visible',
+          y: 0,
+          duration: 2,
+          ease: "power2.out",
+        }, "-=3");
     }
   }, [loading]);
 
   useEffect(() => {
-    if (!hasLoadedBefore && progress === 100) {
+    if (progress === 100) {
       const timer = setTimeout(() => {
-        setLoading(false)
-        sessionStorage.setItem("hasLoadedBefore", "true")
-      }, 4000)
-      return () => clearTimeout(timer)
+        setLoading(false);
+        if (typeof window !== "undefined") {
+          sessionStorage.setItem("hasLoadedBefore", "true");
+        }
+      }, 4000);
+      return () => clearTimeout(timer);
     }
-  }, [hasLoadedBefore, progress])
+  }, [progress]);
 
   useEffect(() => {
     const handleBeforeUnload = () => {
-      sessionStorage.removeItem("hasLoadedBefore")
-    }
-    
-    window.addEventListener("beforeunload", handleBeforeUnload)
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload)
-  }, [])
+      if (typeof window !== "undefined") {
+        sessionStorage.removeItem("hasLoadedBefore");
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, []);
 
   useEffect(() => {
-    if (loading) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
+    document.body.style.overflow = loading ? "hidden" : "auto";
+    return () => { document.body.style.overflow = "auto"; };
   }, [loading]);
 
   return (
@@ -121,38 +116,36 @@ const HeroSection = () => {
                 <span ref={line2Ref} className='inline-block opacity-0'>we print it</span>
               </h1>
             </div>
-            
+
             <div className='flex flex-col gap-10 items-center z-20 justify-between md:flex-row'>
-              {/* SlideControl with ref */}
               <div ref={controlsRef} className="opacity-0">
-                <SlideControl 
-                  slideData={slideData} 
-                  onSlideChange={handleSlideChange} 
-                  selectedTshirtId={selectedTshirt.id} 
+                <SlideControl
+                  slideData={slideData}
+                  onSlideChange={handleSlideChange}
+                  selectedTshirtId={selectedTshirt.id}
                 />
               </div>
-              
-              {/* Button with ref */}
+
               <div ref={buttonRef} className='flex gap-4 opacity-0'>
                 <Button color="black" href={`/t-shirt/${selectedTshirt.id}`}>
                   <div className='flex items-center uppercase gap-4 text-black'>
-                    <IoBagHandleOutline className='text-[22px]'/>
+                    <IoBagHandleOutline className='text-[22px]' />
                     Add To Cart
                   </div>
                 </Button>
               </div>
             </div>
           </div>
-        
-          <TshirtModel selectedTshirt={selectedTshirt}/>
-          
+
+          <TshirtModel selectedTshirt={selectedTshirt} />
+
           <div className='absolute scale-40 mt-6 inset-0 flex items-center justify-center z-[1] opacity-60 md:mt-26 md:scale-50'>
             <GlowCircle />
           </div>
         </div>
       </section>
     </>
-  )
+  );
 }
 
-export default HeroSection
+export default HeroSection;
