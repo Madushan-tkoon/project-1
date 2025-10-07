@@ -2,7 +2,7 @@
 
 import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { TModel } from './TshirtModelSetting';
+import { TModel } from './TMs';
 import { OrbitControls, useProgress } from '@react-three/drei';
 import { AxesHelper, DirectionalLight} from 'three';
 import gsap from 'gsap';

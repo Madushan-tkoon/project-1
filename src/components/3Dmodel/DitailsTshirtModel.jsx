@@ -1,7 +1,7 @@
 "use client"
 import { Canvas, useThree } from '@react-three/fiber'
 import React, { Suspense, useEffect, useRef } from 'react'
-import { TModel } from './TshirtModelSetting'
+import { TModel } from './TMs';
 import { OrbitControls } from '@react-three/drei'
 import {DirectionalLight } from 'three'
 
