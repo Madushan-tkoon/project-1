@@ -138,7 +138,7 @@ const FashionSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className='relative h-dvh overflow-hidden '>
+    <section ref={sectionRef} className='relative h-[850px] sm:h-[950px] overflow-hidden '>
       <div className='mx-auto relative w-full max-w-6xl h-full px-10 flex items-center justify-center'>
         <div className='flex items-center justify-between w-full h-[720px] '>
           <div ref={img1Ref} className='place-self-start w-[150px] h-[200px] sm:w-[200px] sm:h-[300px] rounded-2xl overflow-hidden'>
