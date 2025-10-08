@@ -23,6 +23,7 @@ const Scene = ({selectedTshirt})=>{
 
   const containerRef = useRef(null);
   const modelRef = useRef(null);
+  const modelPosition = useRef(null);
   const {progress} = useProgress();
   const tl = gsap.timeline();
   const {viewport, camera, scene, size} = useThree();
@@ -40,6 +41,7 @@ const Scene = ({selectedTshirt})=>{
   useEffect(() => {
     if (hasAnimatedBefore === "true") {
       setIsAnimationComplete(true);
+      modelPosition.current.position.y = -0.13;
     }
   }, []);
 
@@ -147,11 +149,11 @@ const Scene = ({selectedTshirt})=>{
       let positionY;
 
       if(viewport.width < 0.49){
-        scale = 0.052;
-        positionY = -0.342
+        scale = 0.045;
+        positionY = -0.292
       }else if (viewport.width < 0.97){
-        scale = 0.06;
-        positionY = -0.41;
+        scale = 0.055;
+        positionY = -0.35;
       }else{
         scale = 0.07;
         positionY = -0.53
@@ -164,7 +166,7 @@ const Scene = ({selectedTshirt})=>{
 
 
   return (
-    <group position={[0, -1.25, 0]}>
+    <group ref={modelPosition} position={[0, -1.25, 0]}>
        <OrbitControls
         target={[0, 0, 0]}
         enablePan={false} 
