@@ -87,7 +87,7 @@ const Loading = () => {
         <Image
           src={Logo}
           alt="logo"
-          className='w-4 md:w-8'
+          className='w-4 md:w-8 opacity-0'
           color='white'
         />
       </div>
