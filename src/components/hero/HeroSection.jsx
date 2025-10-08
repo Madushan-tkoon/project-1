@@ -136,8 +136,9 @@ const HeroSection = () => {
               </div>
             </div>
           </div>
-
-          <TshirtModel selectedTshirt={selectedTshirt} />
+          <div className='absolute inset-0 max-h-[600px] flex items-center justify-center mx-auto my-auto'>
+            <TshirtModel selectedTshirt={selectedTshirt} />
+          </div>
 
           <div className='absolute scale-40 mt-6 inset-0 flex items-center justify-center z-[1] opacity-60 md:mt-26 md:scale-50'>
             <GlowCircle />
