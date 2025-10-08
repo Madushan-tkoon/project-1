@@ -150,7 +150,7 @@ const Scene = ({selectedTshirt})=>{
 
       if(viewport.width < 0.49){
         scale = 0.045;
-        positionY = -0.292
+        positionY = -0.248
       }else if (viewport.width < 0.97){
         scale = 0.055;
         positionY = -0.35;

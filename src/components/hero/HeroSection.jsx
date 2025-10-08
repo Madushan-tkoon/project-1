@@ -111,13 +111,13 @@ const HeroSection = () => {
         <div className='mx-auto w-full max-w-6xl h-full px-5'>
           <div className='flex flex-col justify-between h-full py-12'>
             <div className='flex flex-col gap-6'>
-              <h1 className='font-1 text-[55px] md:text-[75px] lg:text-[95px] font-medium leading-[1] tracking-wide text-white uppercase mt-25'>
+              <h1 className='font-1 text-[42px] md:text-[75px] lg:text-[95px] font-medium leading-[1] tracking-wide text-white uppercase mt-10 md:mt-25'>
                 <span ref={line1Ref} className='inline-block opacity-0'>you dream it,</span><br />
                 <span ref={line2Ref} className='inline-block opacity-0'>we print it</span>
               </h1>
             </div>
 
-            <div className='flex flex-col gap-10 items-center z-20 justify-between md:flex-row'>
+            <div className='flex flex-col gap-6 items-center z-20 justify-between md:flex-row mb-[-38px] md:mb-0 scale-85 md:scale-100'>
               <div ref={controlsRef} className="opacity-0">
                 <SlideControl
                   slideData={slideData}
