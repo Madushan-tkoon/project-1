@@ -107,7 +107,7 @@ const HeroSection = () => {
     <>
       <Header />
       {loading && <Loading />}
-      <section className={`relative h-[750px] sm:h-full overflow-hidden bg-neutral-900`}>
+      <section className={`relative h-full overflow-hidden bg-neutral-900`}>
         <div className='mx-auto w-full max-w-6xl h-full px-5'>
           <div className='flex flex-col justify-between h-full py-12'>
             <div className='flex flex-col gap-6'>

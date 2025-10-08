@@ -28,15 +28,30 @@ const Scene = ({selectedTshirt})=>{
   const tl = gsap.timeline();
   const {viewport, camera, scene, size} = useThree();
 
-
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  
   const [isAnimationComplete, setIsAnimationComplete] = useState(false)
+  const [isMobile, setIsMobile] = useState(false); // ✅ New state for mobile detection
 
   const hasAnimatedBefore = sessionStorage.getItem("hasAnimatedBefore");
   const isInitialAnimationPlayed = useRef(hasAnimatedBefore === "true");
 
+  // ✅ Check if screen is mobile size
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 700);
+    };
+
+    // Initial check
+    checkScreenSize();
+
+    // Add event listener for resize
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, []);
 
   useEffect(() => {
     if (hasAnimatedBefore === "true") {
@@ -45,11 +60,11 @@ const Scene = ({selectedTshirt})=>{
     }
   }, []);
 
-    // Mouse move event handle karanna
+  // ✅ Mouse move event - only activate if not mobile and animation complete
   useEffect(() => {
-    const handleMouseMove = (event) => {
-      if (!isAnimationComplete) return; 
+    if (isMobile || !isAnimationComplete) return;
 
+    const handleMouseMove = (event) => {
       const x = (event.clientX / size.width) * 2 - 1;
       const y = -(event.clientY / size.height) * 2 + 1;
       setMousePosition({ x, y });
@@ -60,11 +75,11 @@ const Scene = ({selectedTshirt})=>{
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
-
-  }, [size, isAnimationComplete]);
+  }, [size, isAnimationComplete, isMobile]); // ✅ Add isMobile as dependency
 
   useFrame(() => {
-    if (containerRef.current && isAnimationComplete) {
+    // ✅ Only apply rotation if not mobile and animation complete
+    if (containerRef.current && isAnimationComplete && !isMobile) {
       const targetRotationY = mousePosition.x * (Math.PI / 80);
       const targetRotationX = mousePosition.y * (Math.PI / 160); 
 
@@ -167,7 +182,7 @@ const Scene = ({selectedTshirt})=>{
 
   return (
     <group ref={modelPosition} position={[0, -1.25, 0]}>
-       <OrbitControls
+       {!isMobile && <OrbitControls
         target={[0, 0, 0]}
         enablePan={false} 
         enableZoom={false} 
@@ -175,7 +190,7 @@ const Scene = ({selectedTshirt})=>{
         maxPolarAngle={Math.PI / 2} 
         minDistance={3} 
         maxDistance={3} 
-      />
+      />}
       <ambientLight intensity={0.6} />
       <group ref={containerRef}>
         <group ref={modelRef}>
@@ -185,6 +200,5 @@ const Scene = ({selectedTshirt})=>{
     </group>
   )
 }
-
 
 export default TshirtModel
