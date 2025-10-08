@@ -7,7 +7,7 @@ import { useParams } from 'next/navigation';
 import { PiShareFatFill } from "react-icons/pi";
 import {useCart} from '../../../context/CartContext'
 import productData from '../../../data/productData';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 const ProductDetailsPage = () => {    
@@ -30,19 +30,31 @@ const ProductDetailsPage = () => {
     </svg>
   );
 
+  const [hight, setHight] = useState(350);
+
+  useEffect(()=>{
+    if (screen.height<700){
+      setHight(280);
+    }else{
+      setHight(350);
+    }
+  },[screen.height])
+
 
   return (
     <div className='h-dvh bg-[#fff]' >
       <Header color="black"/>
-      <div className='mx-auto max-w-6xl gap-6 flex flex-col md:flex-row pt-20 sm:pt-30 justify-between h-full items-center px-6 py-4 sm:py-7'>
-        <div className='w-[350px] h-[350px] sm:w-[400px] sm:h-[400px] md:w-[450px] md:h-[450px] lg:w-[500px] lg:h-[500px] relative'>
-          <DitailsTshirtModel logo={logo} material={material}/>
+      <div className='mx-auto relative max-w-6xl gap-6 flex flex-col md:flex-row pt-20 sm:pt-30 justify-between h-full items-center px-6 py-4 sm:py-7'>
+        <div className='flex h-full items-center justify-center'>
+          <div className={`w-[350px] h-[${hight}px] sm:w-[400px] sm:h-[400px] md:w-[450px] md:h-[450px] lg:w-[500px] lg:h-[500px] relative`}>
+            <DitailsTshirtModel logo={logo} material={material}/>
+          </div>
         </div>
 
         <div className='flex flex-col gap-1 sm:gap-6 w-full md:w-[350px] lg:w-[430px]'>
             <div className='flex flex-col gap-1.5'>
-              <p className="text-[12px] sm:text-sm uppercase font-semibold text-gray-500 tracking-wider">Super Soft</p>
-              <h1 className="text-[23px] sm:text-4xl md:text-5xl font-bold leading-tight">{title}</h1>
+              <p className="text-[13px] sm:text-sm uppercase font-semibold text-gray-500 tracking-wider">Super Soft</p>
+              <h1 className="text-[26px] sm:text-4xl md:text-5xl font-bold leading-tight">{title}</h1>
               <div className="flex items-center gap-2 mb-1 scale-85 sm:scale-100 ml-[-28px] sm:ml-0">
                 <div className="flex gap-1">
                   <StarIcon /><StarIcon /><StarIcon /><StarIcon /><StarIcon />
