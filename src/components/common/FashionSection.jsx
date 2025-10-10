@@ -37,12 +37,12 @@ const AnimatedText = ({ text, className, delay = 0 }) => {
             { opacity: 0.2 },
             {
               opacity: 1,
-              duration: 0.4,
+              duration: 0.8,
               stagger: 0.1,
               ease: 'power2.out',
               scrollTrigger: {
                 trigger: textElement,
-                start: "top 80%",
+                start: "top 90%",
                 end: "bottom 20%",
                 toggleActions: "play none none none",
                 once: true
@@ -99,7 +99,7 @@ const FashionSection = () => {
           { 
             width: "200px", 
             opacity: 1, 
-            duration: 2.5,
+            duration: 3.5,
             ease: "power3.out",
             scrollTrigger: scrollTriggerConfig
           }
@@ -138,7 +138,7 @@ const FashionSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className='relative h-[850px] sm:h-[950px] overflow-hidden '>
+    <section ref={sectionRef} className='relative h-[850px] sm:h-[950px] overflow-hidden'>
       <div className='mx-auto relative w-full max-w-6xl h-full px-10 flex items-center justify-center'>
         <div className='flex items-center justify-between w-full h-[720px] '>
           <div ref={img1Ref} className='place-self-start w-[150px] h-[200px] sm:w-[200px] sm:h-[300px] rounded-2xl overflow-hidden'>

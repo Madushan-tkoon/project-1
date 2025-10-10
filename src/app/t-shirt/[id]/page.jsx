@@ -23,6 +23,7 @@ const ProductDetailsPage = () => {
   const availableSizes = ['S', 'M', 'L', 'XL']
 
   const [selectedSize, setSelectedSize] = useState("M")
+  const [isAdding, setIsAdding] = useState(false)
  
   const StarIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 fill-current text-black" viewBox="0 0 24 24">
@@ -40,6 +41,17 @@ const ProductDetailsPage = () => {
     }
   },[screen.height])
 
+  const handleAddToCart = () => {
+    if (isAdding) return;
+    
+    setIsAdding(true);
+    const selectedProduct = {...product, size: selectedSize}
+    addToCart(selectedProduct);
+    
+    setTimeout(() => {
+      setIsAdding(false);
+    }, 600);
+  }
 
   return (
     <div className='h-dvh bg-[#fff]' >
@@ -65,7 +77,6 @@ const ProductDetailsPage = () => {
             <span className="text-[20px] sm:text-[30px]  font-bold text-gray-800">${price}</span>
             
             <div className='flex flex-col gap-2'>
-                {/* <label>Size: {selectedSize} </label> */}
                 <div className='flex gap-3 text-[12px] sm:text-[15px] mt-2.5 '>
                   {availableSizes.map((size, index)=>(
                     <button 
@@ -78,18 +89,31 @@ const ProductDetailsPage = () => {
             </div>
             <div className='flex w-full justify-between gap-5 mt-7'>
                 <button 
-                  onClick={()=>{
-                    const selectedProduct = {...product, size: selectedSize}
-                    addToCart(selectedProduct)
-                  }} 
-                  className='bg-black text-white w-full text-[14px] font-2 py-0 sm:py-2.5 rounded-2xl cursor-pointer'>Add To Cart</button>
-                <button className='bg-black text-white w-[60px] text-[20px] font-3 py-2.5 rounded-2xl flex items-center justify-center cursor-pointer'><PiShareFatFill/></button>
+                  onClick={handleAddToCart}
+                  disabled={isAdding}
+                  className={`w-full text-[14px] font-2 py-0 sm:py-2.5 rounded-2xl cursor-pointer transition-all duration-300 ${
+                    isAdding 
+                      ? 'bg-black text-white transform scale-95' 
+                      : 'bg-black text-white active:scale-95'
+                  }`}
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    {isAdding ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span>Adding...</span>
+                      </>
+                    ) : (
+                      'Add To Cart'
+                    )}
+                  </div>
+                </button>
+                
+                <button className='bg-black text-white w-[60px] text-[20px] font-3 py-2.5 rounded-2xl flex items-center justify-center cursor-pointer '><PiShareFatFill/></button>
             </div>
             
         </div>
       </div>
-
-      <Footer/>
     </div>
   )
 }

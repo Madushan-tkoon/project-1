@@ -182,7 +182,7 @@ const Scene = ({selectedTshirt})=>{
 
   return (
     <group ref={modelPosition} position={[0, -1.25, 0]}>
-       {!isMobile && <OrbitControls
+      <OrbitControls
         target={[0, 0, 0]}
         enablePan={false} 
         enableZoom={false} 
@@ -190,7 +190,7 @@ const Scene = ({selectedTshirt})=>{
         maxPolarAngle={Math.PI / 2} 
         minDistance={3} 
         maxDistance={3} 
-      />}
+      />
       <ambientLight intensity={0.6} />
       <group ref={containerRef}>
         <group ref={modelRef}>
