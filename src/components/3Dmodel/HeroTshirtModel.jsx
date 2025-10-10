@@ -36,16 +36,13 @@ const Scene = ({selectedTshirt})=>{
   const hasAnimatedBefore = sessionStorage.getItem("hasAnimatedBefore");
   const isInitialAnimationPlayed = useRef(hasAnimatedBefore === "true");
 
-  // ✅ Check if screen is mobile size
   useEffect(() => {
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth <= 700);
     };
 
-    // Initial check
     checkScreenSize();
 
-    // Add event listener for resize
     window.addEventListener('resize', checkScreenSize);
 
     return () => {
@@ -60,9 +57,8 @@ const Scene = ({selectedTshirt})=>{
     }
   }, []);
 
-  // ✅ Mouse move event - only activate if not mobile and animation complete
   useEffect(() => {
-    if (isMobile || !isAnimationComplete) return;
+    if (!isAnimationComplete) return;
 
     const handleMouseMove = (event) => {
       const x = (event.clientX / size.width) * 2 - 1;
@@ -75,11 +71,10 @@ const Scene = ({selectedTshirt})=>{
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [size, isAnimationComplete, isMobile]); // ✅ Add isMobile as dependency
+  }, [size, isAnimationComplete, ]);
 
   useFrame(() => {
-    // ✅ Only apply rotation if not mobile and animation complete
-    if (containerRef.current && isAnimationComplete && !isMobile) {
+    if (containerRef.current && isAnimationComplete ) {
       const targetRotationY = mousePosition.x * (Math.PI / 80);
       const targetRotationX = mousePosition.y * (Math.PI / 160); 
 
@@ -182,7 +177,7 @@ const Scene = ({selectedTshirt})=>{
 
   return (
     <group ref={modelPosition} position={[0, -1.25, 0]}>
-      <OrbitControls
+      {!isMobile && <OrbitControls
         target={[0, 0, 0]}
         enablePan={false} 
         enableZoom={false} 
@@ -190,7 +185,7 @@ const Scene = ({selectedTshirt})=>{
         maxPolarAngle={Math.PI / 2} 
         minDistance={3} 
         maxDistance={3} 
-      />
+      />}
       <ambientLight intensity={0.6} />
       <group ref={containerRef}>
         <group ref={modelRef}>
