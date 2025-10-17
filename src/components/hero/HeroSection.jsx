@@ -117,7 +117,7 @@ const HeroSection = () => {
               </h1>
             </div>
 
-            <div className='flex flex-col gap-6 items-center z-20 justify-between md:flex-row mb-[-38px] md:mb-0 scale-85 md:scale-100'>
+            <div className='flex flex-col gap-6 items-center z-19 justify-between md:flex-row mb-[-38px] md:mb-0 scale-85 md:scale-100'>
               <div ref={controlsRef} className="opacity-0">
                 <SlideControl
                   slideData={slideData}

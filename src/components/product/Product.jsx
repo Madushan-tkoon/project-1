@@ -27,11 +27,9 @@ const Product = ({title, products}) => {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Desktop සඳහා පමණක් animation
       const mm = gsap.matchMedia();
       
       mm.add("(min-width: 768px)", () => {
-        // Header elements animation
         gsap.fromTo(".header-element", 
           {
             y: 80,
@@ -53,7 +51,6 @@ const Product = ({title, products}) => {
           }
         );
 
-        // Product cards animation
         gsap.fromTo(".product-card", 
           {
             y: 100, 
@@ -76,10 +73,7 @@ const Product = ({title, products}) => {
         );
       });
 
-      // Mobile සඳහා - animation නොමැතිව
       mm.add("(max-width: 767px)", () => {
-        // Mobile එකේ කිසිදු animation එකක් නොකරන්න
-        // Elements මුල් state එකේම තබන්න
         gsap.set([".header-element", ".product-card"], {
           y: 0,
           opacity: 1

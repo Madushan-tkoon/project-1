@@ -17,7 +17,6 @@ const AnimatedText = ({ text, className, delay = 0 }) => {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
       
-      // Desktop සඳහා පමණක් text animation
       mm.add("(min-width: 768px)", () => {
         const textElement = textRef.current;
 
@@ -53,11 +52,9 @@ const AnimatedText = ({ text, className, delay = 0 }) => {
         }
       });
 
-      // Mobile සඳහා - text animation නැත
       mm.add("(max-width: 767px)", () => {
         const textElement = textRef.current;
         if (textElement) {
-          // Text එක සාමාන්‍ය state එකේම තබා ගන්න
           textElement.style.opacity = '1';
         }
       });
@@ -84,7 +81,6 @@ const FashionSection = () => {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      // Desktop සඳහා පමණක් image animations
       mm.add("(min-width: 768px)", () => {
         const scrollTriggerConfig = {
           trigger: sectionRef.current,
@@ -117,7 +113,6 @@ const FashionSection = () => {
         );
       });
 
-      // Mobile සඳහා - images සහ video සාමාන්‍ය state එකේම තබා ගන්න
       mm.add("(max-width: 767px)", () => {
         if (img1Ref.current) {
           img1Ref.current.style.width = "150px";

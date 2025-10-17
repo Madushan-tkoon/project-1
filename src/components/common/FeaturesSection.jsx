@@ -33,7 +33,6 @@ const FeaturesSection = () => {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      // Desktop සඳහා පමණක් animation (768px සහ ඊට වැඩි)
       mm.add("(min-width: 768px)", () => {
         featuresRef.current.forEach((item, index) => {
           if (item) {
@@ -61,11 +60,9 @@ const FeaturesSection = () => {
         })
       });
 
-      // Mobile සඳහා - animation නොමැතිව (767px සහ ඊට අඩු)
       mm.add("(max-width: 767px)", () => {
         featuresRef.current.forEach((item, index) => {
           if (item) {
-            // Mobile එකේ elements සාමාන්‍ය state එකේම තබා ගන්න
             gsap.set(item, {
               opacity: 1,
               y: 0,

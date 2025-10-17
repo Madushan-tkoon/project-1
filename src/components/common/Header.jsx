@@ -38,7 +38,6 @@ const Header = ({color}) => {
                <IoBagHandleOutline className='text-[23px] md:text-[26px] ' />
             </Button>
 
-            {/* PopupCart */}
             <PopupCart isOpen={isCartOpen} toggleCart={toggleCart} />
 
             <div className='block md:hidden'>

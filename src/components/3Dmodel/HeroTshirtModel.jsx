@@ -31,7 +31,7 @@ const Scene = ({selectedTshirt})=>{
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isAnimationComplete, setIsAnimationComplete] = useState(false)
-  const [isMobile, setIsMobile] = useState(false); // ✅ New state for mobile detection
+  const [isMobile, setIsMobile] = useState(false); 
 
   const hasAnimatedBefore = sessionStorage.getItem("hasAnimatedBefore");
   const isInitialAnimationPlayed = useRef(hasAnimatedBefore === "true");
