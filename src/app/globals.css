@@ -17,112 +17,15 @@
 }
 
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none; 
+  scrollbar-width: none;    
 }
 
 body::-webkit-scrollbar {
   display: none;
 }
 
-/* හෝ scrollbar එකේ පළල 0 කරන්න */
 body::-webkit-scrollbar {
   width: 0;
   height: 0;
-}
-
-
-.bg-texture {
-    /* background-image: url('../../public/images/bg-texture.webp'); */
-    /* background-size: 720px 460px; */
-    background-repeat: repeat;
-    background-position: center;
-}
-
-/* Make sure the background container covers the whole screen and stays behind everything else. */
-.background-container {
-    position: fixed; /* Fixes it to the viewport */
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #1a1a1a; /* A dark, slightly off-black color */
-    z-index: 100; /* Make sure it's behind the main content */
-    overflow: hidden; /* Prevents overflow from the animations */
-}
-
-/* Style for the soft, radial light effect */
-.radial-gradient {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 120%;
-    height: 120%;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(60, 60, 60, 0.4) 0%, rgba(26, 26, 26, 0) 60%);
-    animation: pulse-light 10s infinite ease-in-out;
-}
-
-/* Keyframes for the radial gradient animation */
-@keyframes pulse-light {
-    0% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.8;
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(1.05);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.8;
-    }
-}
-
-/* Style for the animated noise/grain effect */
-.noise-effect {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Use a repeating gradient to create the grain texture. */
-    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-    background-size: 2px 2px;
-    opacity: 0.5; /* Adjust opacity for subtlety */
-    animation: grain 8s steps(10) infinite;
-}
-
-/* Keyframes for the grain effect animation */
-@keyframes grain {
-    0%, 100% {
-        transform: translate(0, 0);
-    }
-    10% {
-        transform: translate(-5%, -10%);
-    }
-    20% {
-        transform: translate(-15%, 5%);
-    }
-    30% {
-        transform: translate(7%, -25%);
-    }
-    40% {
-        transform: translate(-5%, 25%);
-    }
-    50% {
-        transform: translate(-15%, 10%);
-    }
-    60% {
-        transform: translate(15%, 0%);
-    }
-    70% {
-        transform: translate(0%, 15%);
-    }
-    80% {
-        transform: translate(25%, 25%);
-    }
-    90% {
-        transform: translate(-25%, 0%);
-    }
 }
